@@ -1,4 +1,4 @@
-package com.jadeilton.usuario_back_end.business.dto;
+package com.jadeilton.agendador_tarefas_back_and.business.dto;
 
 
 import lombok.*;
@@ -14,10 +14,7 @@ public class UsuarioDTO {
 
 
 
-
-    private String nome;
     private String email;
     private String senha;
-    private List<EnderecoDTO> enderecos;
-    private List<TelefoneDTO> telefone;
+
  }
