@@ -36,14 +36,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Verifica se o cabeçalho existe e começa com "Bearer "
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             // Extrai o token JWT do cabeçalho
-            final String token = authorizationHeader.substring(7);
+            final String token = authorizationHeader.substring(7).trim();
             // Extrai o nome de usuário do token JWT
             final String username = jwtUtil.extrairEmailToken(token);
 
             // Se o nome de usuário não for nulo e o usuário não estiver autenticado ainda
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // Carrega os detalhes do usuário a partir do nome de usuário
-                UserDetails userDetails = userDetailsService.carregaDadosDeUsuario(username, authorizationHeader);
+                UserDetails userDetails = userDetailsService.carregaDadosDeUsuario(username, token);
                 // Valida o token JWT
                 if (jwtUtil.validateToken(token, username)) {
                     // Cria um objeto de autenticação com as informações do usuário
