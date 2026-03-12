@@ -16,13 +16,14 @@ public class UserDetailsServiceImpl {
     @Autowired
     private UsuarioClient client;
 
+    public UserDetails carregaDadosDeUsuario(String email, String token){
 
+        UsuarioDTO usuarioDTO =
+                client.buscaUsuarioPorEmail(email, "Bearer " + token);
 
-    public UserDetails carregaDadosDeUsuario(String emai, String token){
-        UsuarioDTO usuarioDTO = client.buscaUsuarioPorEmail(emai,token);
         return User
-                .withUsername(usuarioDTO.getEmail()) // Define o nome de usuário como o e-mail
-                .password(usuarioDTO.getSenha()) // Define a senha do usuário
-                .build(); // Constrói o objeto UserDetails
+                .withUsername(usuarioDTO.getEmail())
+                .password(usuarioDTO.getSenha())
+                .build();
     }
 }
