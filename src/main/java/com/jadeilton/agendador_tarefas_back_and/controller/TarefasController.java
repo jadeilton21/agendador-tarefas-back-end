@@ -3,6 +3,8 @@ package com.jadeilton.agendador_tarefas_back_and.controller;
 
 import com.jadeilton.agendador_tarefas_back_and.business.TarefasService;
 import com.jadeilton.agendador_tarefas_back_and.business.dto.TarefasDTO;
+import com.jadeilton.agendador_tarefas_back_and.infrastructure.enums.StatusNotificacoEnum;
+import com.jadeilton.agendador_tarefas_back_and.infrastructure.repository.TarefasRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +22,7 @@ public class TarefasController {
 
 
     private final TarefasService tarefasService;
+    private final TarefasRepository tarefasRepository;
 
 
     @PostMapping
@@ -48,4 +51,33 @@ public class TarefasController {
         return ResponseEntity.ok(tarefas);
 
     }
-}
+
+
+
+
+    @DeleteMapping
+    public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id){
+        tarefasService.deletaTarefaPorId(id);
+
+        return ResponseEntity.ok().build();
+
+    }
+
+    @PatchMapping
+    public ResponseEntity<TarefasDTO> alteraStatusNotificaco(@RequestParam("Status")StatusNotificacoEnum status,
+                                                             @RequestParam("Id") String id){
+
+
+        return ResponseEntity.ok(tarefasService.alteraStatus(status, id));
+    }
+
+
+
+    @PutMapping
+    public ResponseEntity<TarefasDTO> updateTarefas(@RequestBody TarefasDTO dto, @RequestParam("id") String id) {
+
+
+        return ResponseEntity.ok(tarefasService.updateTarefas(dto,id));
+    }
+
+ }
