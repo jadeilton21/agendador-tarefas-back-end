@@ -5,10 +5,7 @@ import com.jadeilton.agendador_tarefas_back_and.infrastructure.enums.StatusNotif
 import lombok.*;
 
 import java.time.LocalDateTime;
-
-
-
-
+import java.time.OffsetDateTime;
 
 
 @AllArgsConstructor
@@ -26,7 +23,7 @@ public class TarefasDTO {
     private String nomeTarefa;
     private String descricao;
     private LocalDateTime dataCriacao;
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataEvento;
     private String emailUsuario;
     private LocalDateTime dataAlteracao;

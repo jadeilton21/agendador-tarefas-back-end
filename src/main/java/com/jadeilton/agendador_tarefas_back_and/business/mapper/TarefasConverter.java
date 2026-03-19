@@ -6,6 +6,9 @@ import com.jadeilton.agendador_tarefas_back_and.infrastructure.entity.TarefasEnt
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -16,6 +19,8 @@ public interface TarefasConverter {
     @Mapping(source = "id" , target = "id")
     @Mapping(source = "dataEvento" , target = "dataEvento")
     @Mapping(source = "dataCriacao" , target = "dataCriacao")
+
+
 
     TarefasEntity paraTarefaEntity(TarefasDTO dto);
 
