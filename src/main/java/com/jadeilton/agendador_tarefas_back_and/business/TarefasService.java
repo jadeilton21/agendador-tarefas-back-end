@@ -24,6 +24,7 @@ public class TarefasService {
     private final TarefasConverter tarefaConverter;
     private final JwtUtil jwtUtil;
     private final TarefaUpdateConverter tarefaUpdateConverter;
+
     public TarefasDTO gravarTarefa(String token, TarefasDTO dto){
 
         String email = jwtUtil.extrairEmailToken(token.substring(7));
@@ -39,7 +40,7 @@ public class TarefasService {
     public List<TarefasDTO> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataIncial, LocalDateTime dataFinal){
 
         return tarefaConverter.paraListaTarefasDTO(
-                tarefasRepository.findByDataEventoBetween(dataIncial,dataFinal));
+                tarefasRepository.findByDataEventoBetweenAndStatusNotificacoEnum(dataIncial,dataFinal));
 
     }
 
@@ -60,7 +61,7 @@ public class TarefasService {
         }
         catch (ResourceNotFoundException e){
             throw new ResourceNotFoundException("Erro ao deletar tarefa por id, id Inexistente " + id
-            , e.getCause());
+                    , e.getCause());
         }
     }
 
@@ -90,5 +91,4 @@ public class TarefasService {
         }
 
     }
-
 }
