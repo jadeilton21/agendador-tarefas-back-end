@@ -1,6 +1,7 @@
 package com.jadeilton.agendador_tarefas_back_and.infrastructure.repository;
 
 import com.jadeilton.agendador_tarefas_back_and.infrastructure.entity.TarefasEntity;
+import com.jadeilton.agendador_tarefas_back_and.infrastructure.enums.StatusNotificacoEnum;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +14,8 @@ public interface TarefasRepository extends MongoRepository<TarefasEntity, String
 
     List<TarefasEntity> findByDataEventoBetweenAndStatusNotificacoEnum(
             LocalDateTime dataInicial,
-            LocalDateTime dataFinal
-    );
+            LocalDateTime dataFinal,
+            StatusNotificacoEnum statusNotificacoEnum);
 
     List<TarefasEntity> findByEmailUsuario(String email);
 }

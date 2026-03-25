@@ -30,14 +30,14 @@ public class TarefasController {
 
     @GetMapping("/eventos")
     public ResponseEntity<List<TarefasDTO>> buscaListaDeTarefasPorPeriodo(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal) {
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataInicial,
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataFinal) {
 
         if (dataInicial.isAfter(dataFinal)) {
             throw new IllegalArgumentException("dataInicial não pode ser maior que dataFinal");
         }
 
-        return ResponseEntity.ok(tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal));
+        return ResponseEntity.ok(tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal ));
     }
 
     @GetMapping
@@ -53,8 +53,8 @@ public class TarefasController {
     }
 
     @PatchMapping
-    public ResponseEntity<TarefasDTO> alteraStatusNotificaco(@RequestParam("Status") StatusNotificacoEnum status,
-                                                             @RequestParam("Id") String id) {
+    public ResponseEntity<TarefasDTO> alteraStatusNotificaco(@RequestParam("status") StatusNotificacoEnum status,
+                                                             @RequestParam("id") String id) {
         return ResponseEntity.ok(tarefasService.alteraStatus(status, id));
     }
 
