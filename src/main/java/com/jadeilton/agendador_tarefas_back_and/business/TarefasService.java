@@ -37,7 +37,7 @@ public class TarefasService {
     }
 
 
-    public List<TarefasDTO> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataIncial, LocalDateTime dataFinal){
+    public List<TarefasDTO> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataIncial, LocalDateTime dataFinal, String token){
 
         return tarefaConverter.paraListaTarefasDTO(
                 tarefasRepository.findByDataEventoBetweenAndStatusNotificacoEnum(dataIncial,dataFinal,StatusNotificacoEnum.PENDENTE));
@@ -55,7 +55,7 @@ public class TarefasService {
     }
 
 
-    public void deletaTarefaPorId(String id){
+    public void deletaTarefaPorId(String id, String token){
         try {
             tarefasRepository.deleteById(id);
         }
@@ -66,7 +66,7 @@ public class TarefasService {
     }
 
 
-    public TarefasDTO alteraStatus(StatusNotificacoEnum status, String id){
+    public TarefasDTO alteraStatus(StatusNotificacoEnum status, String id, String token){
         try{
             TarefasEntity entity = tarefasRepository.findById(id).
                     orElseThrow(() -> new ResourceNotFoundException("Tarefa não encontrada " + id));
@@ -79,7 +79,7 @@ public class TarefasService {
         }
     }
 
-    public TarefasDTO updateTarefas(TarefasDTO dto, String id){
+    public TarefasDTO updateTarefas(TarefasDTO dto, String id, String token){
         try {
             TarefasEntity entity = tarefasRepository.findById(id).
                     orElseThrow(() -> new ResourceNotFoundException("Tarefa não encontrada " + id));
