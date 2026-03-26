@@ -23,43 +23,64 @@ public class TarefasController {
     private final TarefasRepository tarefasRepository;
 
     @PostMapping
-    public ResponseEntity<TarefasDTO> gravarTarefas(@RequestBody TarefasDTO dto,
-                                                    @RequestHeader("Authorization") String token) {
+    public ResponseEntity<TarefasDTO> gravarTarefas(
+            @RequestBody TarefasDTO dto,
+            @RequestHeader("Authorization") String token) {
+
         return ResponseEntity.ok(tarefasService.gravarTarefa(token, dto));
     }
 
     @GetMapping("/eventos")
     public ResponseEntity<List<TarefasDTO>> buscaListaDeTarefasPorPeriodo(
             @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataFinal) {
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataFinal,
+            @RequestHeader("Authorization") String token) {
 
         if (dataInicial.isAfter(dataFinal)) {
             throw new IllegalArgumentException("dataInicial não pode ser maior que dataFinal");
         }
 
-        return ResponseEntity.ok(tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal ));
+        return ResponseEntity.ok(
+                tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal, token)
+        );
     }
 
     @GetMapping
-    public ResponseEntity<List<TarefasDTO>> buscaTarefasPorEmail(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<TarefasDTO>> buscaTarefasPorEmail(
+            @RequestHeader("Authorization") String token) {
+
         List<TarefasDTO> tarefas = tarefasService.buscaTarefasPorEmail(token);
         return ResponseEntity.ok(tarefas);
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id) {
-        tarefasService.deletaTarefaPorId(id);
+    public ResponseEntity<Void> deletaTarefaPorId(
+            @RequestParam("id") String id,
+            @RequestHeader("Authorization") String token) {
+
+        tarefasService.deletaTarefaPorId(id, token);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping
-    public ResponseEntity<TarefasDTO> alteraStatusNotificaco(@RequestParam("status") StatusNotificacoEnum status,
-                                                             @RequestParam("id") String id) {
-        return ResponseEntity.ok(tarefasService.alteraStatus(status, id));
+    public ResponseEntity<TarefasDTO> alteraStatusNotificaco(
+            @RequestParam("status") StatusNotificacoEnum status,
+            @RequestParam("id") String id,
+            @RequestHeader("Authorization") String token) {
+
+        return ResponseEntity.ok(
+                tarefasService.alteraStatus(status, id, token)
+        );
     }
 
     @PutMapping
-    public ResponseEntity<TarefasDTO> updateTarefas(@RequestBody TarefasDTO dto, @RequestParam("id") String id) {
-        return ResponseEntity.ok(tarefasService.updateTarefas(dto, id));
+    public ResponseEntity<TarefasDTO> updateTarefas(
+            @RequestBody TarefasDTO dto,
+            @RequestParam("id") String id,
+            @RequestHeader("Authorization") String token) {
+
+        return ResponseEntity.ok(
+                tarefasService.updateTarefas(dto, id, token)
+        );
     }
 }
