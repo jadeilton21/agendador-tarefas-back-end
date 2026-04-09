@@ -2,7 +2,7 @@ package com.jadeilton.agendador_tarefas_back_and.controller;
 
 
 import com.jadeilton.agendador_tarefas_back_and.business.TarefasService;
-import com.jadeilton.agendador_tarefas_back_and.business.dto.TarefasDTO;
+import com.jadeilton.agendador_tarefas_back_and.business.dto.TarefasDTORecord;
 import com.jadeilton.agendador_tarefas_back_and.infrastructure.enums.StatusNotificacoEnum;
 import com.jadeilton.agendador_tarefas_back_and.infrastructure.repository.TarefasRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
@@ -23,15 +22,15 @@ public class TarefasController {
     private final TarefasRepository tarefasRepository;
 
     @PostMapping
-    public ResponseEntity<TarefasDTO> gravarTarefas(
-            @RequestBody TarefasDTO dto,
+    public ResponseEntity<TarefasDTORecord> gravarTarefas(
+            @RequestBody TarefasDTORecord dto,
             @RequestHeader("Authorization") String token) {
 
         return ResponseEntity.ok(tarefasService.gravarTarefa(token, dto));
     }
 
     @GetMapping("/eventos")
-    public ResponseEntity<List<TarefasDTO>> buscaListaDeTarefasPorPeriodo(
+    public ResponseEntity<List<TarefasDTORecord>> buscaListaDeTarefasPorPeriodo(
             @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataFinal,
             @RequestHeader("Authorization") String token) {
@@ -46,10 +45,10 @@ public class TarefasController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TarefasDTO>> buscaTarefasPorEmail(
+    public ResponseEntity<List<TarefasDTORecord>> buscaTarefasPorEmail(
             @RequestHeader("Authorization") String token) {
 
-        List<TarefasDTO> tarefas = tarefasService.buscaTarefasPorEmail(token);
+        List<TarefasDTORecord> tarefas = tarefasService.buscaTarefasPorEmail(token);
         return ResponseEntity.ok(tarefas);
     }
 
@@ -63,7 +62,7 @@ public class TarefasController {
     }
 
     @PatchMapping
-    public ResponseEntity<TarefasDTO> alteraStatusNotificaco(
+    public ResponseEntity<TarefasDTORecord> alteraStatusNotificaco(
             @RequestParam("status") StatusNotificacoEnum status,
             @RequestParam("id") String id,
             @RequestHeader("Authorization") String token) {
@@ -74,8 +73,8 @@ public class TarefasController {
     }
 
     @PutMapping
-    public ResponseEntity<TarefasDTO> updateTarefas(
-            @RequestBody TarefasDTO dto,
+    public ResponseEntity<TarefasDTORecord> updateTarefas(
+            @RequestBody TarefasDTORecord dto,
             @RequestParam("id") String id,
             @RequestHeader("Authorization") String token) {
 
