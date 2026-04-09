@@ -1,14 +1,11 @@
 package com.jadeilton.agendador_tarefas_back_and.business.mapper;
 
 
-import com.jadeilton.agendador_tarefas_back_and.business.dto.TarefasDTO;
+import com.jadeilton.agendador_tarefas_back_and.business.dto.TarefasDTORecord;
 import com.jadeilton.agendador_tarefas_back_and.infrastructure.entity.TarefasEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -22,13 +19,13 @@ public interface TarefasConverter {
 
 
 
-    TarefasEntity paraTarefaEntity(TarefasDTO dto);
+    TarefasEntity paraTarefaEntity(TarefasDTORecord dto);
 
 
-    TarefasDTO paraTarefaDTO(TarefasEntity entity);
+    TarefasDTORecord paraTarefaDTO(TarefasEntity entity);
 
 
-    List<TarefasEntity> paraListaTarefasEntity(List<TarefasDTO> dtos);
+    List<TarefasEntity> paraListaTarefasEntity(List<TarefasDTORecord> dtos);
 
-    List<TarefasDTO> paraListaTarefasDTO(List<TarefasEntity> entities);
+    List<TarefasDTORecord> paraListaTarefasDTORecord(List<TarefasEntity> entities);
 }
